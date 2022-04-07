@@ -21,6 +21,7 @@ Guide
    :maxdepth: 2
    :caption: Contents:
    
+   rom
    license
 
 
