@@ -201,15 +201,9 @@ class NN_alt():
 
 		Parameters:
 			- dataset_train : tuple
-				[0] X_train : ndarray
-					M-by-d 2D numpy array containing input training data
-				[1] Y_train : ndarray
-					M-by-d2 2D numpy array containing output training data
+				something 1
 			- dataset_val : tuple
-				[0] X_val : ndarray
-					M-by-d 2D numpy array containing input validation data
-				[1] Y_val : ndarray
-					M-by-d2 2D numpy array containing output validation data
+				something 2
 			- num_outer : int
 				number of outer iterations to perform
 			- num_epoch : int
