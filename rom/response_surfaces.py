@@ -157,7 +157,7 @@ class NN_alt():
 		loss_func (): loss function for network
 		lr (float): learning rate
 		lr_decay (float): learning rate decay
-		alpha (float): regularization parameter (ell2 regularizer)
+		alpha (float): regularization parameter (ell 2 regularizer)
 		U (ndarray): d-by-k 2D numpy array to reduce input dimension
 		loss_train (list): contains training loss values at each epoch
 		loss_val (list): contains validation loss values at each epoch
@@ -205,7 +205,7 @@ class NN_alt():
 			print(f'\nOuter iteration: {ite+1}\n')
 
 			# train NN
-			loss_train, loss_val = self._train_NN(dataset_train,dataset_val,num_epoch,batch_size,record,verbose)  
+			loss_train, loss_val = self.train_NN(dataset_train,dataset_val,num_epoch,batch_size,record,verbose)  
 			if record:
 				self.loss_train += loss_train
 				if dataset_val is not None:
@@ -219,20 +219,17 @@ class NN_alt():
 								) 
 
 			# train subspace
-			self._train_sub(X_train,Y_train)
+			self.train_sub(X_train,Y_train)
 
 	def predict(self,X):
 		"""Calculates output of trained NN model.
 
-		Parameters:
-			- X : ndarray
-				?-by-d 2D numpy array containing input data
+		Args:
+			X (ndarray): ?-by-d 2D numpy array containing input data
 
 		Returns:
-			- Y : ndarray
-				?-by-d2 2D numpy array containing output data
+			Y (ndarray): ?-by-d2 2D numpy array containing output data
 
-		Notes:
 		"""
 		X_tensor = torch.from_numpy(X).float()
 		U_tensor = torch.from_numpy(self.U).float()
@@ -243,43 +240,22 @@ class NN_alt():
 		Y = Y_tensor.numpy()
 		return Y
 
-	def _train_NN(self,dataset_train,dataset_val,num_epoch,batch_size,record,verbose):
-		"""
-		Trains and validates NN.
+	def train_NN(self,dataset_train,dataset_val,num_epoch,batch_size,record,verbose):
+		"""Trains and validates NN.
 
-		Parameters:
-			- dataset_train : tuple
-				[0] X_train : ndarray
-					M-by-d 2D numpy array containing input training data
-				[1] Y_train : ndarray
-					M-by-d2 2D numpy array containing output training data
-			- dataset_val : tuple
-				[0] X_val : ndarray
-					M-by-d 2D numpy array containing input validation data
-				[1] Y_val : ndarray
-					M-by-d2 2D numpy array containing output validation data
-			- num_outer : int
-				number of outer iterations to perform
-			- num_epoch : int
-				number of inner iterations for NN training to perform
-			-batch_size : int
-				number of training samples in each training batch
-			- record : bool
-				choose to record loss during training or not
-			- verbose : int
-				amount of information to print 
-				0 = nothing printed
-				1 = loss values printed every 1000 epochs
-				2 = loss values printed every 100 epochs
-				>2 = loss values printed every epoch
+		Args:
+			dataset_train (tuple,ndarray): [X_train,Y_train], numpy array containing input/output training data
+			dataset_val (tuple,ndarray): [X_val,Y_val], numpy array containing input/output validation data
+			num_outer (int): number of outer iterations to perform
+			num_epoch (int): number of inner iterations for NN training to perform
+			batch_size (int): number of training samples in each training batch
+			record (bool): choose to record loss during training or not
+			verbose (int): amount of information to print; 0 = nothing printed; 1 = loss values printed every 1000 epochs; 2 = loss values printed every 100 epochs; >2 = loss values printed every epoch
 
 		Returns:
-			- loss_train : list
-				contains training loss at each epoch
-			- loss_val : list
-				contains validation loss at each epoch
+			loss_train (list): contains training loss at each epoch
+			loss_val (list): contains validation loss at each epoch
 
-		Notes:
 		"""
 
 		# convert data to torch tensor
@@ -327,20 +303,13 @@ class NN_alt():
 				else:
 					print_epoch(verbose,epoch+1,num_epoch,self.loss_train[-1],None)
 
-	def _train_sub(self,X_train,Y_train):
-		"""
-		Trains subspace U. 
+	def train_sub(self,X_train,Y_train):
+		"""Trains subspace U. 
 
-		Parameters: 
-			- X_train : ndarray
-				M-by-d 2D numpy array containing input training data
-			- Y_train : ndarray
-				M-by-d2 2D numpy array containing output training data
+		Args: 
+			X_train (ndarray): M-by-d 2D numpy array containing input training data
+			Y_train (ndarray): M-by-d2 2D numpy array containing output training data
 
-		Returns:
-			None
-
-		Notes:
 		"""
 		m, n = self.U.shape
 
@@ -348,8 +317,8 @@ class NN_alt():
 		manifold = Grassmann(m, n)
 
 		# define cost and gradient functions
-		cost = lambda U: self._sub_res(U, X_train, Y_train)
-		grad = lambda U: self._sub_dres(U, X_train, Y_train)
+		cost = lambda U: self.sub_res(U, X_train, Y_train)
+		grad = lambda U: self.sub_dres(U, X_train, Y_train)
 
 		# instantiate optimization problem over Grassman manifold
 		problem = Problem(manifold=manifold, cost=cost, egrad=grad, verbosity=0)
@@ -357,25 +326,20 @@ class NN_alt():
 
 		self.U = solver.solve(problem, x=self.U) # update U
 
-	def _sub_res(self,U,X_train,Y_train):
-		"""
-		Defines cost function w.r.t. U. 
+	def sub_res(self,U,X_train,Y_train):
+		"""Defines cost function w.r.t. U. 
 
-		Parameters: 
-			- U : 
-				d-by-k 2D numpy array containing reduced basis
-			- X_train : ndarray
-				M-by-d 2D numpy array containing input training data
-			- Y_train : ndarray
-				M-by-d2 2D numpy array containing output training data
+		Note:
+			This function is defined for the pymanopt optimization problem. Must take in U as variable.
+
+		Args: 
+			U (ndarray): d-by-k 2D numpy array containing reduced basis
+			X_train (ndarray): M-by-d 2D numpy array containing input training data
+			Y_train (ndarray): M-by-d2 2D numpy array containing output training data
 
 		Returns:
-			- out : float
-				cost value for given U
+			out (float): cost value for given U
 
-		Notes:
-			This function is defined for the pymanopt optimization problem.
-			Must take in U as variable.
 		"""
 
 		# convert data to torch tensor
@@ -389,25 +353,20 @@ class NN_alt():
 
 		return out
 
-	def _sub_dres(self,U,X_train,Y_train):
-		"""
-		Defines derivative of cost function w.r.t. U. 
+	def sub_dres(self,U,X_train,Y_train):
+		"""Defines derivative of cost function w.r.t. U. 
 
-		Parameters: 
-			- U : 
-				d-by-k 2D numpy array containing reduced basis
-			- X_train : ndarray
-				M-by-d 2D numpy array containing input training data
-			- Y_train : ndarray
-				M-by-d2 2D numpy array containing output training data
+		Note:
+			This function is defined for the pymanopt optimization problem. Must take in U as variable.
+
+		Args:  
+			U (ndarray): d-by-k 2D numpy array containing reduced basis
+			X_train (ndarray): M-by-d 2D numpy array containing input training data
+			Y_train (ndarray): M-by-d2 2D numpy array containing output training data
 
 		Returns:
-			ndarray
-				d-by-k 2D numpy array containing reduced basis
+			(ndarray): d-by-k 2D numpy array containing reduced basis
 
-		Notes:
-			This function is defined for the pymanopt optimization problem.
-			Must take in U as variable.
 		"""
 
 		# convert data to torch tensor
@@ -423,31 +382,33 @@ class NN_alt():
 
 		return U.grad.numpy()
 
-	def _rel_error_tensor(self,Y_true,Y_calc):
-		"""
-		Calculates relative error (via ell 2 norm) between 2 PyTorch tensors.
+	def rel_error_tensor(self,Y_true,Y_calc):
+		"""Calculates relative error (via ell 2 norm) between 2 PyTorch tensors.
 
-		Parameters:
-			- Y_true : ndarray
-				numpy array containing true values
-			- Y_calc : ndarray
-				numpy array containing calculated/predicted values
+		Args:
+			Y_true (ndarray): numpy array containing true values
+			Y_calc (ndarray): numpy array containing calculated/predicted values
 
 		Returns:
-			float
-				relative error between Y_true and Y_calc
+			(float): relative error between Y_true and Y_calc
 
-		Notes:
 		"""
 		return np.sqrt(self.loss_func(Y_true,Y_calc)/self.loss_func(Y_true,torch.zeros(Y_true.size(),requires_grad=False)))
 
 
 	class _ShallowNet(nn.Module):
-		'''
-		Notation:
-			h_0 = first layer of network
-			h_last = last layer of network
-			h_i (1 <= i <= last-1) can refer to the ith hidden layer
+		'''Shallow ReLU network structure.
+		
+		Attributes:
+			h_0 (): first linear layer
+			h_last (): second linear layer
+			sigmoid (): ReLU activation function
+
+		Args:
+			input_dim (int): dimension of input data
+			hidden_dim (int): dimension of hidden layer
+			output_dim (int): dimension of output data
+
 		'''
 		def __init__(self, input_dim, hidden_dim, output_dim):
 			super().__init__()
@@ -456,48 +417,18 @@ class NN_alt():
 			self.sigmoid = nn.ReLU()
 			return
 		def forward(self, x0, U):
+			"""
+
+			Args:
+				x0 (torch tensor): M-by-d 2D torch tensor containing input data
+				U (torch tensor): d-by-k 2D torch tensor for dimension reduction step
+
+			Returns:
+				x3 (torch tensor): M-by-d2 2D torch tensor containing predicted output
+
+			"""
 			x0 = torch.matmul(x0, U)
 			x1 = self.h_0(x0)
 			x2 = self.sigmoid(x1)
 			x3 = self.h_last(x2)
 			return x3
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

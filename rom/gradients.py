@@ -1,22 +1,16 @@
 import numpy as np 
 
 def local_linear_gradients(X,Y,n=None):
-	"""
-	Estimates gradients via local linear approximations.
+	"""Estimates gradients via local linear approximations.
 
-	Parameters:
-		- X : ndarray
-			M-by-d 2D numpy array containing input training samples
-		- Y : ndarray
-			M length 1D numpy array containing the 1D output training samples
-		- n : int
-			number of nearest neighbors to use for local linear approximation
+	Args:
+		X (ndarray): M-by-d 2D numpy array containing input training samples
+		Y (ndarray): M length 1D numpy array containing the 1D output training samples
+		n (int): number of nearest neighbors to use for local linear approximation
 
 	Returns:
-		- DY : ndarray
-			M-by-d 2D numpy array containing local linear approximation of gradients for each training sample
+		DY (ndarray): M-by-d 2D numpy array containing local linear approximation of gradients for each training sample
 
-	Notes:
 	"""
 	M, d = X.shape
 
