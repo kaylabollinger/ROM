@@ -1,8 +1,5 @@
-rom package
+API Documentation
 ===========
-
-Submodules
-----------
 
 rom.gradients module
 --------------------
@@ -32,14 +29,6 @@ rom.utils module
 ----------------
 
 .. automodule:: rom.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: rom
    :members:
    :undoc-members:
    :show-inheritance:

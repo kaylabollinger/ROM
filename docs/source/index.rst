@@ -6,16 +6,8 @@
 Welcome to ROM's documentation!
 ===============================
 
-Another header
-==============
+ROM is a reduced order model regression package with implementations of the ROMs introduced in Bollinger (2022).
 
-Text explaining stuff...
-
-    print 'hello'
-    >> hello
-
-Guide
-^^^^^
 
 .. toctree::
    :maxdepth: 2
