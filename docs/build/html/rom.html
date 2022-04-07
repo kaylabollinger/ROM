@@ -69,20 +69,391 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
-<section id="rom-gradients-module">
-<h2>rom.gradients module<a class="headerlink" href="#rom-gradients-module" title="Permalink to this headline"></a></h2>
+<section id="module-rom.gradients">
+<span id="rom-gradients-module"></span><h2>rom.gradients module<a class="headerlink" href="#module-rom.gradients" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="rom.gradients.local_linear_gradients">
+<span class="sig-prename descclassname"><span class="pre">rom.gradients.</span></span><span class="sig-name descname"><span class="pre">local_linear_gradients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.gradients.local_linear_gradients" title="Permalink to this definition"></a></dt>
+<dd><p>Estimates gradients via local linear approximations.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>X<span class="classifier">ndarray</span></dt><dd><p>M-by-d 2D numpy array containing input training samples</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Y<span class="classifier">ndarray</span></dt><dd><p>M length 1D numpy array containing the 1D output training samples</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>n<span class="classifier">int</span></dt><dd><p>number of nearest neighbors to use for local linear approximation</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>DY<span class="classifier">ndarray</span></dt><dd><p>M-by-d 2D numpy array containing local linear approximation of gradients for each training sample</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Notes:</p>
+</dd></dl>
+
 </section>
-<section id="rom-response-surfaces-module">
-<h2>rom.response_surfaces module<a class="headerlink" href="#rom-response-surfaces-module" title="Permalink to this headline"></a></h2>
+<section id="module-rom.response_surfaces">
+<span id="rom-response-surfaces-module"></span><h2>rom.response_surfaces module<a class="headerlink" href="#module-rom.response_surfaces" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rom.response_surfaces.NN_alt">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rom.response_surfaces.</span></span><span class="sig-name descname"><span class="pre">NN_alt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr_decay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.response_surfaces.NN_alt" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rom.response_surfaces.NN_alt.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.response_surfaces.NN_alt.predict" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates output of trained NN model.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>X<span class="classifier">ndarray</span></dt><dd><p>?-by-d 2D numpy array containing input data</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Y<span class="classifier">ndarray</span></dt><dd><p>?-by-d2 2D numpy array containing output data</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Notes:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rom.response_surfaces.NN_alt.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_outer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.response_surfaces.NN_alt.train" title="Permalink to this definition"></a></dt>
+<dd><p>Trains NN model via alternating minimization scheme.</p>
+<dl>
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>dataset_train<span class="classifier">tuple</span></dt><dd><dl class="simple">
+<dt>[0] X_train<span class="classifier">ndarray</span></dt><dd><p>M-by-d 2D numpy array containing input training data</p>
+</dd>
+<dt>[1] Y_train<span class="classifier">ndarray</span></dt><dd><p>M-by-d2 2D numpy array containing output training data</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>dataset_val<span class="classifier">tuple</span></dt><dd><dl class="simple">
+<dt>[0] X_val<span class="classifier">ndarray</span></dt><dd><p>M-by-d 2D numpy array containing input validation data</p>
+</dd>
+<dt>[1] Y_val<span class="classifier">ndarray</span></dt><dd><p>M-by-d2 2D numpy array containing output validation data</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>num_outer<span class="classifier">int</span></dt><dd><p>number of outer iterations to perform</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>num_epoch<span class="classifier">int</span></dt><dd><p>number of inner iterations for NN training to perform</p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="simple">
+<dt>-batch_size<span class="classifier">int</span></dt><dd><p>number of training samples in each training batch</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><dl class="simple">
+<dt>record<span class="classifier">bool</span></dt><dd><p>choose to record loss during training or not</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>verbose<span class="classifier">int</span></dt><dd><p>amount of information to print 
+0 = nothing printed
+1 = loss values printed every 1000 epochs
+2 = loss values printed every 100 epochs
+&gt;2 = loss values printed every epoch</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+<p>Notes:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rom.response_surfaces.RFE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rom.response_surfaces.</span></span><span class="sig-name descname"><span class="pre">RFE</span></span><a class="headerlink" href="#rom.response_surfaces.RFE" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Random Feature Expansion</p>
+<p><cite>Instance Attributes</cite></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>c (ndarray) : N length 1D numpy array containing coefficients of learned RFE model</p></li>
+<li><p>Omega (ndarray) : N-by-d 2D numpy array containing weights of the RFE model</p></li>
+<li><dl class="simple">
+<dt>bias<span class="classifier">ndarray</span></dt><dd><p>N length 1D numpy array containing biases of the RFE model</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>scale_A_normalize<span class="classifier">ndarray</span></dt><dd><p>N length 1D numpy array to normalize columns of A_train (RF matrix with training data)</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p><cite>Notes</cite></p>
+<blockquote>
+<div><p>All attributes are set after the “train” method is called.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="rom.response_surfaces.RFE.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.response_surfaces.RFE.predict" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates output of trained RFE model.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>X<span class="classifier">ndarray</span></dt><dd><p>?-by-d 2D numpy array containing ? number of input data points</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Y<span class="classifier">ndarray</span></dt><dd><p>? length 1D numpy array containing predicted output values</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Notes:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rom.response_surfaces.RFE.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.response_surfaces.RFE.train" title="Permalink to this definition"></a></dt>
+<dd><p>Trains RFE model by learning coefficients c via ridge regression.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>X_train<span class="classifier">ndarray</span></dt><dd><p>M-by-d 2D numpy array containing input training data</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Y_train<span class="classifier">ndarray</span></dt><dd><p>M length 1D numpy array containing output training data</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>N<span class="classifier">int</span></dt><dd><p>number of weights to use for RFE model</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>alpha<span class="classifier">float</span></dt><dd><p>regularizing hyperparameter for ridge regression model</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Notes:</dt><dd><p>Assumes output data is 1D.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="rom-subspaces-module">
-<h2>rom.subspaces module<a class="headerlink" href="#rom-subspaces-module" title="Permalink to this headline"></a></h2>
+<section id="module-rom.subspaces">
+<span id="rom-subspaces-module"></span><h2>rom.subspaces module<a class="headerlink" href="#module-rom.subspaces" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="rom.subspaces.AS">
+<span class="sig-prename descclassname"><span class="pre">rom.subspaces.</span></span><span class="sig-name descname"><span class="pre">AS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">DY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.subspaces.AS" title="Permalink to this definition"></a></dt>
+<dd><p>Constructs a reduced subspace via active subspaces.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>DY<span class="classifier">ndarray</span></dt><dd><p>M-by-d 2D numpy array containing gradients for each training sample</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>k<span class="classifier">int</span></dt><dd><p>reduced dimension size</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>U<span class="classifier">ndarray</span></dt><dd><p>d-by-k 2D numpy array containing reduced basis vectors</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Notes:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rom.subspaces.POD">
+<span class="sig-prename descclassname"><span class="pre">rom.subspaces.</span></span><span class="sig-name descname"><span class="pre">POD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.subspaces.POD" title="Permalink to this definition"></a></dt>
+<dd><p>Constructs a reduced subspace via active subspaces.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>X<span class="classifier">ndarray</span></dt><dd><p>M-by-d 2D numpy array containing gradients for each training sample</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>k<span class="classifier">int</span></dt><dd><p>reduced dimension size</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>U<span class="classifier">ndarray</span></dt><dd><p>d-by-k 2D numpy array containing reduced basis vectors</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Notes:</p>
+</dd></dl>
+
 </section>
-<section id="rom-utils-module">
-<h2>rom.utils module<a class="headerlink" href="#rom-utils-module" title="Permalink to this headline"></a></h2>
+<section id="module-rom.utils">
+<span id="rom-utils-module"></span><h2>rom.utils module<a class="headerlink" href="#module-rom.utils" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="rom.utils.check_1D">
+<span class="sig-prename descclassname"><span class="pre">rom.utils.</span></span><span class="sig-name descname"><span class="pre">check_1D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.utils.check_1D" title="Permalink to this definition"></a></dt>
+<dd><p>Enforces requirement that X be a 1D numpy array.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>X<span class="classifier">ndarray</span></dt><dd><p>ND numpy array containing data points</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>X<span class="classifier">ndarray</span></dt><dd><p>unaltered 1D numpy array</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Notes:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rom.utils.check_2D">
+<span class="sig-prename descclassname"><span class="pre">rom.utils.</span></span><span class="sig-name descname"><span class="pre">check_2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.utils.check_2D" title="Permalink to this definition"></a></dt>
+<dd><p>Enforces requirement that X be a 2D numpy array.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>X<span class="classifier">ndarray</span></dt><dd><p>ND numpy array containing data points</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>X<span class="classifier">ndarray</span></dt><dd><p>unaltered 2D numpy array</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Notes:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rom.utils.print_epoch">
+<span class="sig-prename descclassname"><span class="pre">rom.utils.</span></span><span class="sig-name descname"><span class="pre">print_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.utils.print_epoch" title="Permalink to this definition"></a></dt>
+<dd><p>Prints training/validation error at given epoch.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+<p>Notes:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rom.utils.rel_error">
+<span class="sig-prename descclassname"><span class="pre">rom.utils.</span></span><span class="sig-name descname"><span class="pre">rel_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y_calc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rom.utils.rel_error" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates relative error (via ell 2 norm) between 2 arrays.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Y_true<span class="classifier">ndarray</span></dt><dd><p>numpy array containing true values</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Y_calc<span class="classifier">ndarray</span></dt><dd><p>numpy array containing calculated/predicted values</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>out<span class="classifier">float</span></dt><dd><p>relative error between Y_true and Y_calc</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Notes:</p>
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline"></a></h2>
+<section id="module-rom">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-rom" title="Permalink to this headline"></a></h2>
 </section>
 </section>
 
