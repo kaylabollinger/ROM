@@ -10,7 +10,7 @@ from pymanopt import Problem
 from pymanopt.solvers import SteepestDescent
 
 class RFE():
-	"""Random Feature Expansion
+	"""Random Feature Expansion surrogate model.
 
 	Note: 
 		All attributes are set after the "train" method is called.
@@ -56,9 +56,9 @@ class RFE():
 				# else work in overparameterized regime
 				N = 5*M
 
-		self._construct_weights(X_train,N,k)
+		self.construct_weights(X_train,N,k)
 
-		A_train = self._construct_A(X_train)
+		A_train = self.construct_A(X_train)
 
 		clf = linear_model.Ridge(alpha=alpha, fit_intercept=False, max_iter=5000, tol=0.0001)
 		clf.fit(A_train, Y_train)
@@ -75,23 +75,18 @@ class RFE():
 
 		"""
 
-		A = self._construct_A(X)
+		A = self.construct_A(X)
 		Y = np.matmul(A,self.c.T)
 		return Y
 
-	def _construct_weights(self,X_train,N,k):
-		"""
-		Constructs weights and biases for RFE model.
+	def construct_weights(self,X_train,N,k):
+		"""Constructs weights and biases for RFE model.
 
-		Parameters:
-			- X_train : ndarray
-				M-by-d 2D numpy array containing input training data
-			- N : int
-				number of weights to use for RFE model
-			- k : int
-				dimension of input data
+		Args:
+			X_train (ndarray): M-by-d 2D numpy array containing input training data
+			N (int): number of weights to use for RFE model
+			k (int): dimension of input data
 
-		Notes:
 		"""
 		Omega_keep = [] 
 		bias_keep = []
@@ -110,7 +105,7 @@ class RFE():
 
 			bias = np.random.uniform(low=-1,high=1)
 
-			A_temp = self._phi(np.matmul(X_train,Omega.T)+bias)
+			A_temp = self.phi(np.matmul(X_train,Omega.T)+bias)
 			mag = np.linalg.norm(A_temp) 
 			if mag > 1e-5:
 				ct_pass += 1
@@ -125,44 +120,47 @@ class RFE():
 		self.bias = np.array(bias_keep)
 		self.scale_A_normalize = np.array(scale_A_normalize_keep)
 
-	def _construct_A(self,X):
-		"""
-		Constructs random feature matrix A.
+	def construct_A(self,X):
+		"""Constructs random feature matrix A.
 
-		Parameters:
-			- X : ndarray
-				?-by-d 2D numpy array containing ? number of input data points
+		Args:
+			X (ndarray): ?-by-d 2D numpy array containing ? number of input data points
 
 		Returns:
-			- A : ndarray
-				?-by-N 2D numpy array representing the random feature matrix A
+			A (ndarray): ?-by-N 2D numpy array representing the random feature matrix A
 
-		Notes:
 		"""
-		A = self._phi(np.matmul(X,self.Omega.T)+self.bias)/self.scale_A_normalize
+		A = self.phi(np.matmul(X,self.Omega.T)+self.bias)/self.scale_A_normalize
 		return A
 
-	@staticmethod
-	def _phi(nodes):
+	def phi(self,nodes):
 		"""
 		Activation function phi for RFE model.
 
-		Parameters:
-			- nodes : ndarray
-				N length 1D numpy array containing nodal values
+		Args:
+			nodes (ndarray): N length 1D numpy array containing nodal values
 
 		Returns:
-			- out : ndarray
-				N length 1D numpy array containing nodes passed through activation function phi
+			out (ndarray): N length 1D numpy array containing nodes passed through activation function phi
 
-		Notes:
 		"""
 		out = np.maximum(nodes,0.)
 		return out
 
 
 class NN_alt():
-	"""
+	"""Shallow ReLU Network with alternating minimization surrogate model.
+
+	Attributes:
+		net (): two layer ReLU network
+		optimizer (): optimizer for network
+		loss_func (): loss function for network
+		lr (float): learning rate
+		lr_decay (float): learning rate decay
+		alpha (float): regularization parameter (ell2 regularizer)
+		U (ndarray): d-by-k 2D numpy array to reduce input dimension
+		loss_train (list): contains training loss values at each epoch
+		loss_val (list): contains validation loss values at each epoch
 
 	"""
 	def __init__(self,U,dim_layers,lr=0.001,lr_decay=0.9,alpha=0.001):
@@ -182,33 +180,17 @@ class NN_alt():
 
 	def train(self,dataset_train,dataset_val=None,num_outer=10,
 			  num_epoch=5000,batch_size=16,record=True,verbose=2):
-		"""
-		Trains NN model via alternating minimization scheme.
+		"""Trains NN model via alternating minimization scheme.
 
-		Parameters:
-			- dataset_train : tuple
-				something 1
-			- dataset_val : tuple
-				something 2
-			- num_outer : int
-				number of outer iterations to perform
-			- num_epoch : int
-				number of inner iterations for NN training to perform
-			-batch_size : int
-				number of training samples in each training batch
-			- record : bool
-				choose to record loss during training or not
-			- verbose : int
-				amount of information to print 
-				0 = nothing printed
-				1 = loss values printed every 1000 epochs
-				2 = loss values printed every 100 epochs
-				>2 = loss values printed every epoch
+		Args:
+			dataset_train (tuple,ndarray): [X_train,Y_train], numpy array containing input/output training data
+			dataset_val (tuple,ndarray): [X_val,Y_val], numpy array containing input/output validation data
+			num_outer (int): number of outer iterations to perform
+			num_epoch (int): number of inner iterations for NN training to perform
+			batch_size (int): number of training samples in each training batch
+			record (bool): choose to record loss during training or not
+			verbose (int): amount of information to print; 0 = nothing printed; 1 = loss values printed every 1000 epochs; 2 = loss values printed every 100 epochs; >2 = loss values printed every epoch
 
-		Returns:
-			None
-
-		Notes:
 		"""
 		X_train = check_2D(dataset_train[0])
 		Y_train = check_2D(dataset_train[1])
@@ -240,8 +222,7 @@ class NN_alt():
 			self._train_sub(X_train,Y_train)
 
 	def predict(self,X):
-		"""
-		Calculates output of trained NN model.
+		"""Calculates output of trained NN model.
 
 		Parameters:
 			- X : ndarray
