@@ -10,21 +10,17 @@ from pymanopt import Problem
 from pymanopt.solvers import SteepestDescent
 
 class RFE():
-	"""
-	Random Feature Expansion
+	"""Random Feature Expansion
 
-	`Instance Attributes`
-
-		- c (ndarray) : N length 1D numpy array containing coefficients of learned RFE model
-		- Omega (ndarray) : N-by-d 2D numpy array containing weights of the RFE model
-		- bias : ndarray
-			N length 1D numpy array containing biases of the RFE model
-		- scale_A_normalize : ndarray
-			N length 1D numpy array to normalize columns of A_train (RF matrix with training data)
-
-	`Notes`
-
+	Note: 
 		All attributes are set after the "train" method is called.
+
+	Attributes:
+		c (ndarray): N length 1D numpy array containing coefficients of learned RFE model
+		Omega (ndarray): N-by-d 2D numpy array containing weights of the RFE model
+		bias (ndarray): N length 1D numpy array containing biases of the RFE model
+		scale_A_normalize (ndarray): N length 1D numpy array to normalize columns of A_train (RF matrix with training data)
+
 	"""
 
 	def __init__(self):
@@ -34,21 +30,17 @@ class RFE():
 		self.scale_A_normalize = None
 
 	def train(self,dataset_train,N=None,alpha=0.001):
-		"""
-		Trains RFE model by learning coefficients c via ridge regression.
+		"""Trains RFE model by learning coefficients c via ridge regression.
 
-		Parameters:
-			- X_train : ndarray
-				M-by-d 2D numpy array containing input training data
-			- Y_train : ndarray
-				M length 1D numpy array containing output training data
-			- N : int
-				number of weights to use for RFE model
-			- alpha : float
-				regularizing hyperparameter for ridge regression model
-
-		Notes:
+		Note:
 			Assumes output data is 1D.
+
+		Args:
+			X_train (ndarray): M-by-d 2D numpy array containing input training data
+			Y_train (ndarray): M length 1D numpy array containing output training data
+			N (int): number of weights to use for RFE model
+			alpha (float): regularizing hyperparameter for ridge regression model
+
 		"""
 		X_train = check_2D(dataset_train[0])
 		Y_train = check_1D(dataset_train[1])
@@ -73,21 +65,15 @@ class RFE():
 		self.c = clf.coef_
 
 	def predict(self,X):
-		"""
-		Calculates output of trained RFE model.
+		"""Calculates output of trained RFE model.
 		
-		Parameters:
-			- X : ndarray
-				?-by-d 2D numpy array containing ? number of input data points
+		Args:
+			X (ndarray): ?-by-d 2D numpy array containing ? number of input data points
 
 		Returns:
-			- Y : ndarray
-				? length 1D numpy array containing predicted output values
+			Y (ndarray): ? length 1D numpy array containing predicted output values
 
-		Notes:
 		"""
-		# if not [self.c,self.Omega,self.bias,self.scale_A_normalize].all():
-		# 	raise TypeError('Model is not yet trained/constructed--run method "train" first.')
 
 		A = self._construct_A(X)
 		Y = np.matmul(A,self.c.T)
