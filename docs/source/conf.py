@@ -59,3 +59,6 @@ html_static_path = []
 
 # Set up intersphinx maps
 intersphinx_mapping = {'numpy': ('https://numpy.org/doc/stable', None)}
+
+# include link to source code
+html_show_sourcelink = True
