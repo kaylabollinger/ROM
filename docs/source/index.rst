@@ -16,6 +16,14 @@ ROM is a reduced order model regression package with implementations of the ROMs
    rom
    license
 
+Example:
+========
+
+.. code-block:: python
+   
+   import numpy as np
+   import ROM as rom
+   import plotly.graph_objects as go
 
 
 Indices and tables
