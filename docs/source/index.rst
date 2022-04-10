@@ -45,7 +45,7 @@ We will use the first 75 snapshots for training:
    X_train = X[:num_train,:]
    Y_train = Y[:num_train,:]
    
-To train the RFE model, we first learn the :math:`k` dimensional linear subspace :math:`U\in\mathbb{R}^{d \times k}`via POD.
+To train the RFE model, we first learn the :math:`k` dimensional linear subspace :math:`U\in\mathbb{R}^{d \times k}` via POD.
 
 .. code-block:: python
 
@@ -126,7 +126,7 @@ To visualize our generated snapshot at time :code:`time_show`, we display its co
    
    fig.show()
    
-.. image:: images/vort_t100.svg
+.. image:: images/vort_t100.png
 
 Indices and tables
 ==================
