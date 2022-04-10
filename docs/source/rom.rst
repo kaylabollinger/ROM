@@ -12,7 +12,7 @@ rom.gradients module
 rom.response\_surfaces module
 -----------------------------
 
-.. automodule:: rom.response_surfaces
+.. automodule:: rom.surr_model
    :members:
    :undoc-members:
    :show-inheritance:
