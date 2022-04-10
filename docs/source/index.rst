@@ -61,7 +61,7 @@ Then, we train the RFE surrogate model:
 
 .. code-block:: python
 
-    model = ROM.response_surfaces.RFE()
+    model = ROM.surr_model.RFE()
     model.train([UTX_train, Y_train])
     
 Using the trained model, we then regenerate all 150 snapshots:
