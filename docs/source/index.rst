@@ -126,7 +126,7 @@ To visualize our generated snapshot at time :code:`time_show`, we display its co
    
    fig.show()
    
-.. image:: images/vort_t100.png
+.. image:: ../images/vort_t100.png
 
 Indices and tables
 ==================
