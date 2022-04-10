@@ -201,15 +201,11 @@ class NN_alt():
 		print(f'\tBatch size for training NN = {batch_size}')
 
 		# begin alternating minimization process
-		for ite in range(num_outer):
+		for ite in range(num_outer-1):
 			print(f'\nOuter iteration: {ite+1}\n')
 
 			# train NN
-			loss_train, loss_val = self.train_NN(dataset_train,dataset_val,num_epoch,batch_size,record,verbose)  
-			if record:
-				self.loss_train += loss_train
-				if dataset_val is not None:
-					self.loss_val += loss_val
+			self.train_NN(dataset_train,dataset_val,num_epoch,batch_size,record,verbose)  
 
 			# update optimizer
 			self.optimizer = torch.optim.Adam(
@@ -220,6 +216,9 @@ class NN_alt():
 
 			# train subspace
 			self.train_sub(X_train,Y_train)
+		
+		print(f'\nOuter iteration: {num_outer}\n')
+		self.train_NN(dataset_train,dataset_val,num_epoch,batch_size,record,verbose)  
 
 	def predict(self,X):
 		"""Calculates output of trained NN model.
