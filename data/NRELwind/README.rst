@@ -11,4 +11,4 @@ The dataset considered in this thesis was developed the US Department of Energy 
 - TwrBsMyt: fore-aft tower base Bending moment
 - Anch1Ten, Anch2Ten, Anch3Ten: anchor tensions for the three mooring lines
 
-Each dataset (one for each of the 7 outputs) contains 50,000 samples. The original source for this data can be found `here <https://github.com/paulcon/as-data-sets/tree/master/NREL_Wind>'_.
+Each dataset (one for each of the 7 outputs) contains 50,000 samples. The original source for this data can be found `here <https://github.com/paulcon/as-data-sets/tree/master/NREL_Wind>`_.
