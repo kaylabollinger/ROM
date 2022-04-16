@@ -29,7 +29,7 @@ class RFE():
 		self.bias = None
 		self.scale_A_normalize = None
 
-	def train(self,dataset_train,N=None,alpha=0.001):
+	def train(self,dataset_train,N=None,q=None,alpha=0.001):
 		"""Trains RFE model by learning coefficients c via ridge regression.
 
 		Note:
@@ -56,7 +56,13 @@ class RFE():
 				# else work in overparameterized regime
 				N = 5*M
 
-		self.construct_weights(X_train,N,k)
+		if q is None:
+			q = int(np.ceil(k/2))
+		else:
+			if q > k:
+				raise TypeError('sparsity value q must be <= input dimension')
+
+		self.construct_weights(X_train,k,N,q)
 
 		A_train = self.construct_A(X_train)
 
@@ -79,13 +85,14 @@ class RFE():
 		Y = np.matmul(A,self.c.T)
 		return Y
 
-	def construct_weights(self,X_train,N,k):
+	def construct_weights(self,X_train,k,N,q):
 		"""Constructs weights and biases for RFE model.
 
 		Args:
 			X_train (ndarray): M-by-d 2D numpy array containing input training data
-			N (int): number of weights to use for RFE model
 			k (int): dimension of input data
+			N (int): number of weights to use for RFE model
+			q (int): sparsity for weights Omega
 
 		"""
 		Omega_keep = [] 
@@ -99,8 +106,7 @@ class RFE():
 
 			Omega = np.random.uniform(low=-1,high=1,size=(1,k))
 
-			num_zero = np.random.randint(0,k)
-			ind_zero = np.random.choice(k,num_zero,replace=False)
+			ind_zero = np.random.choice(k,k-q,replace=False)
 			Omega[:,ind_zero] = 0.
 
 			bias = np.random.uniform(low=-1,high=1)
