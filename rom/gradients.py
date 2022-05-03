@@ -3,6 +3,9 @@ import numpy as np
 def local_linear_gradients(X,Y,n=None):
 	"""Estimates gradients via local linear approximations.
 
+	Note:
+		This code follows that used in: https://github.com/paulcon/active_subspaces
+
 	Args:
 		X (ndarray): M-by-d 2D numpy array containing input training samples
 		Y (ndarray): M length 1D numpy array containing the 1D output training samples
