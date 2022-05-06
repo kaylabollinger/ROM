@@ -8,10 +8,10 @@ Reduced order models (ROMs) are used to approximate high-dimensional complex sys
 
 Requirements and Dependencies
 -----------------------------
-*scikit-learn>=0.23
-*numpy
-*torch
-*pymanopt
+* scikit-learn>=0.23
+* numpy
+* torch
+* pymanopt
 
 Installation
 ------------
