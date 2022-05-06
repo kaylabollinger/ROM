@@ -13,10 +13,10 @@ See the "How it works" section in the documentation on `ReadTheDocs <https://rom
 
 Requirements and Dependencies
 -----------------------------
-* scikit-learn>=0.23
-* numpy
-* torch
-* pymanopt
+* `scikit-learn <https://scikit-learn.org/>`_ >=0.23
+* `numpy <https://numpy.org/>`_
+* `torch <https://pytorch.org/>`_
+* `pymanopt <https://pymanopt.org/>`_
 
 Installation
 ------------
