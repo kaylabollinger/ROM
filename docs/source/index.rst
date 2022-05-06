@@ -24,7 +24,7 @@ In this example, we walk through how to train ROM's RFE model on fluid vorticity
 .. code-block:: python
    
    import numpy as np
-   import ROM
+   import rom
    import plotly.graph_objects as go
    
 The vorticity data can be found `here <https://github.com/kaylabollinger/ROM>`_.
@@ -51,7 +51,7 @@ To train the RFE model, we first learn the :math:`k` dimensional linear subspace
 
    k = 6
 
-   ss = ROM.subspaces
+   ss = rom.subspaces
    U = ss.POD(X_train,k)
 
    UTX = np.matmul(X,U)
@@ -61,7 +61,7 @@ Then, we train the RFE surrogate model:
 
 .. code-block:: python
 
-    model = ROM.surr_model.RFE()
+    model = rom.surr_model.RFE()
     model.train([UTX_train, Y_train])
     
 Using the trained model, we then regenerate all 150 snapshots:
@@ -75,7 +75,7 @@ Using the trained model, we then regenerate all 150 snapshots:
     
     X_calc = np.concatenate(X_curr,axis=0)
     
-    print(f'relative error = {ROM.utils.rel_error(data,X_calc)}')
+    print(f'relative error = {rom.utils.rel_error(data,X_calc)}')
     
 To visualize our generated snapshot at time :code:`time_show`, we display its contour plot:
 
