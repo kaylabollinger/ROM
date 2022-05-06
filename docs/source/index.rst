@@ -6,7 +6,7 @@
 Welcome to ROM's documentation!
 ===============================
 
-ROM is a reduced order model regression package with implementations of the ROMs introduced in Bollinger (2022).
+ROM is a reduced order model regression package with implementations of the ROMs introduced in `Bollinger (2022) <???>`_ (link will be available once published).
 
 
 .. toctree::
@@ -16,19 +16,47 @@ ROM is a reduced order model regression package with implementations of the ROMs
    rom
    license
 
-Example:
-========
+Description
+-----------
 
-In this example, we walk through how to train ROM's RF model on fluid vorticity data.
+Reduced order models (ROMs) are used to approximate high-dimensional complex systems by simpler, often interpretable low-dimensional systems. This python package contains two ROMs developed in `Bollinger (2022) <???>`_ (link will be available once published). Examples (using Jupyter notebooks) of how to apply this code are found in the "examples" folder in this repository, and the datasets used in these examples (and in the work cited above) are found in the "data" folder.
+
+How it works:
+^^^^^^^^^^^^^
+
+Suppose you want to model a (high-dimensional) system :math:`f:\mathbb{R}^m\to\mathbb{R}^n` (with :math:`m \gg 1`), with a low :math:`k`-dimensional (:math:`k<m`) ROM. The ROMs available in this package take the following form:
+
+.. math::
+
+    f(x)\approx \tilde{f}(U^T x)
+
+where :math:`U\in\mathbb{R}^{m\times k}` is a linear dimension reduction step, and :math:`\tilde{f}:\mathbb{R}^k\to\mathbb{R}^n` is a nonlinear function which approximates :math:`f` on the reduced space defined by :math:`U`. For the ROMs developed in `Bollinger (2022) <???>`_(link will be available once published), :math:`U` and :math:`\tilde{f}` can be learned in the following ways (to be chosen by the user depending on the context of the problem):
+
+:math:`U`
+"""""""""
+
+* :code:`rom.subspaces.AS` = learned via active subspaces (requires derivative information, or approximations thereof--can use :code:`rom.gradients.local_linear_gradients`)
+* :code:`rom.subspaces.POD` learned via proper orthogonal decomposition (used in certain applications, e.g. with time-series data)
+
+:math:`\tilde{f}`
+"""""""""""""""""
+
+* :code:`rom.surr_model.NN_alt` Shallow ReLU Network (uses alternating minimization scheme to update :math:`U`, which is first initialized by one of the above methods)
+* :code:`rom.surr_model.RF` Random Features (shallow network structure with first layer randomized and held fixed, only last layer is trained)
+
+Example:
+^^^^^^^^
+
+In this example, we walk through how to train ROM's RF model on fluid vorticity data (a time-series dataset).
 
 .. code-block:: python
    
-   import numpy as np
    import rom
+   import numpy as np
    import plotly.graph_objects as go
    
 The vorticity data can be found `here <https://github.com/kaylabollinger/ROM>`_.
-To load the data, just replace the :code:`data_dir` variable with the appropriate path to the dataset.
+To load the data, just replace the :code:`data_dir` variable with the appropriate path to the dataset. Since the :code:`.npy` data file is too large to store in this repository, it is available at the provided link. To follow this example, the load the data as an :code:`ndarray` with snapshots stored in rows.
 
 .. code-block:: python
 
@@ -127,6 +155,30 @@ To visualize our generated snapshot at time :code:`time_show`, we display its co
    fig.show()
    
 .. image:: ../images/vort_t100.png
+
+Requirements and Dependencies
+-----------------------------
+* scikit-learn>=0.23
+* numpy
+* torch
+* pymanopt
+
+Installation
+------------
+
+To install the rom package, open the terminal/command line and clone the repository with the command
+
+.. code-block:: bash
+
+    git clone https://github.com/kaylabollinger/ROM.git  
+
+Navigate into the ``rom`` folder (where the setup.py file is located) and run the command
+
+.. code-block:: bash
+
+    python setup.py install
+  
+You should now be able to import the rom package in Python scripts with the command ``import rom``.
 
 Indices and tables
 ==================
