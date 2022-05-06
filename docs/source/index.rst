@@ -158,10 +158,10 @@ To visualize our generated snapshot at time :code:`time_show`, we display its co
 
 Requirements and Dependencies
 -----------------------------
-* scikit-learn>=0.23
-* numpy
-* torch
-* pymanopt
+* `scikit-learn <https://scikit-learn.org/>`_ >=0.23
+* `numpy <https://numpy.org/>`_
+* `torch <https://pytorch.org/>`_
+* `pymanopt <https://pymanopt.org/>`_
 
 Installation
 ------------
