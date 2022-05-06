@@ -170,6 +170,16 @@ class NN_alt():
 
 	"""
 	def __init__(self,U,dim_layers,lr=0.001,lr_decay=0.9,alpha=0.001):
+		"""
+
+		Args:
+			U (ndarray): d-by-k 2D numpy array to reduce input dimension
+			dim_layers (list): 3 dimension values (int) for each layer in shallow network
+			lr (float): learning rate
+			lr_decay (float): learning rate decay
+			alpha (float): regularization parameter (ell 2 regularizer)
+		
+		"""
 		if len(dim_layers)!=3:
 			raise TypeError('Exactly 3 dimension values must be given: input, hidden, and output dimension sizes.')
 		self.net = self._ShallowNet(input_dim=dim_layers[0],

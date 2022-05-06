@@ -19,12 +19,12 @@ ROM is a reduced order model regression package with implementations of the ROMs
 Example:
 ========
 
-In this example, we walk through how to train ROM's RFE model on fluid vorticity data.
+In this example, we walk through how to train ROM's RF model on fluid vorticity data.
 
 .. code-block:: python
    
    import numpy as np
-   import ROM
+   import rom
    import plotly.graph_objects as go
    
 The vorticity data can be found `here <https://github.com/kaylabollinger/ROM>`_.
@@ -45,23 +45,23 @@ We will use the first 75 snapshots for training:
    X_train = X[:num_train,:]
    Y_train = Y[:num_train,:]
    
-To train the RFE model, we first learn the :math:`k` dimensional linear subspace :math:`U\in\mathbb{R}^{d \times k}` via POD.
+To train the RF model, we first learn the :math:`k` dimensional linear subspace :math:`U\in\mathbb{R}^{d \times k}` via POD.
 
 .. code-block:: python
 
    k = 6
 
-   ss = ROM.subspaces
+   ss = rom.subspaces
    U = ss.POD(X_train,k)
 
    UTX = np.matmul(X,U)
    UTX_train = UTX[:num_train,:]
    
-Then, we train the RFE surrogate model:
+Then, we train the RF surrogate model:
 
 .. code-block:: python
 
-    model = ROM.surr_model.RFE()
+    model = rom.surr_model.RF()
     model.train([UTX_train, Y_train])
     
 Using the trained model, we then regenerate all 150 snapshots:
@@ -75,7 +75,7 @@ Using the trained model, we then regenerate all 150 snapshots:
     
     X_calc = np.concatenate(X_curr,axis=0)
     
-    print(f'relative error = {ROM.utils.rel_error(data,X_calc)}')
+    print(f'relative error = {rom.utils.rel_error(data,X_calc)}')
     
 To visualize our generated snapshot at time :code:`time_show`, we display its contour plot:
 
@@ -90,9 +90,9 @@ To visualize our generated snapshot at time :code:`time_show`, we display its co
    num_y = 449
    
    # vorticity
-   PLOT_RFE = np.copy(X_calc)
-   PLOT_RFE[PLOT_RFE>5.] = 5.
-   PLOT_RFE[PLOT_RFE<-5.] = -5.
+   PLOT_RF = np.copy(X_calc)
+   PLOT_RF[PLOT_RF>5.] = 5.
+   PLOT_RF[PLOT_RF<-5.] = -5.
    
    # cylinder
    scale=2
@@ -104,7 +104,7 @@ To visualize our generated snapshot at time :code:`time_show`, we display its co
 
    fig.add_trace(
       go.Contour(
-         z = PLOT_RFE[time_show,:].reshape(num_y,num_x).T,
+         z = PLOT_RF[time_show,:].reshape(num_y,num_x).T,
          x = np.linspace(-1,8,num_y),
          y = np.linspace(-2,2,num_x),
          colorscale = color,

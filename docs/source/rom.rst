@@ -9,7 +9,7 @@ rom.gradients module
    :undoc-members:
    :show-inheritance:
 
-rom.response\_surfaces module
+rom.surr_model module
 -----------------------------
 
 .. automodule:: rom.surr_model
