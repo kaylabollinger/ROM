@@ -18,7 +18,6 @@ CLASSIFIERS = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
-    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Topic :: Scientific/Engineering :: Mathematics",
@@ -29,7 +28,7 @@ here = pathlib.Path(__file__).parent
 with open(here / "requirements.txt", "r") as f:
     REQUIRED = f.readlines()
 
-with open(here / "README.md", "r") as f:
+with open(here / "README.rst", "r") as f:
     LONG_DESCRIPTION = f.read()
 
 
@@ -43,7 +42,7 @@ setup(
     author=AUTHOR,
     author_email=EMAIL,
     url=URL,
-    packages=find_packages(where='rom'),
+    packages=find_packages(exclude=["data","examples"]),
     install_requires=REQUIRED,
     python_requires=PYTHON,
     license=LICENSE,
