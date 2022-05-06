@@ -9,16 +9,16 @@ from pymanopt.manifolds import Grassmann
 from pymanopt import Problem
 from pymanopt.solvers import SteepestDescent
 
-class RFE():
+class RF():
 	"""Random Feature Expansion surrogate model.
 
 	Note: 
 		All attributes are set after the "train" method is called.
 
 	Attributes:
-		c (ndarray): N length 1D numpy array containing coefficients of learned RFE model
-		Omega (ndarray): N-by-d 2D numpy array containing weights of the RFE model
-		bias (ndarray): N length 1D numpy array containing biases of the RFE model
+		c (ndarray): N length 1D numpy array containing coefficients of learned RF model
+		Omega (ndarray): N-by-d 2D numpy array containing weights of the RF model
+		bias (ndarray): N length 1D numpy array containing biases of the RF model
 		scale_A_normalize (ndarray): N length 1D numpy array to normalize columns of A_train (RF matrix with training data)
 
 	"""
@@ -29,8 +29,8 @@ class RFE():
 		self.bias = None
 		self.scale_A_normalize = None
 
-	def train(self,dataset_train,N=None,q=None,alpha=0.001):
-		"""Trains RFE model by learning coefficients c via ridge regression.
+	def train(self,dataset_train,N=None,s=None,alpha=0.001):
+		"""Trains RF model by learning coefficients c via ridge regression.
 
 		Note:
 			Assumes output data is 1D.
@@ -38,7 +38,7 @@ class RFE():
 		Args:
 			X_train (ndarray): M-by-d 2D numpy array containing input training data
 			Y_train (ndarray): M length 1D numpy array containing output training data
-			N (int): number of weights to use for RFE model
+			N (int): number of weights to use for RF model
 			alpha (float): regularizing hyperparameter for ridge regression model
 
 		"""
@@ -56,13 +56,13 @@ class RFE():
 				# else work in overparameterized regime
 				N = 5*M
 
-		if q is None:
-			q = int(np.ceil(k/2))
+		if s is None:
+			s = int(np.ceil(k/2))
 		else:
-			if q > k:
-				raise TypeError('sparsity value q must be <= input dimension')
+			if s > k:
+				raise TypeError('sparsity value s must be <= input dimension')
 
-		self.construct_weights(X_train,k,N,q)
+		self.construct_weights(X_train,k,N,s)
 
 		A_train = self.construct_A(X_train)
 
@@ -71,7 +71,7 @@ class RFE():
 		self.c = clf.coef_
 
 	def predict(self,X):
-		"""Calculates output of trained RFE model.
+		"""Calculates output of trained RF model.
 		
 		Args:
 			X (ndarray): ?-by-d 2D numpy array containing ? number of input data points
@@ -85,14 +85,14 @@ class RFE():
 		Y = np.matmul(A,self.c.T)
 		return Y
 
-	def construct_weights(self,X_train,k,N,q):
-		"""Constructs weights and biases for RFE model.
+	def construct_weights(self,X_train,k,N,s):
+		"""Constructs weights and biases for RF model.
 
 		Args:
 			X_train (ndarray): M-by-d 2D numpy array containing input training data
 			k (int): dimension of input data
-			N (int): number of weights to use for RFE model
-			q (int): sparsity for weights Omega
+			N (int): number of weights to use for RF model
+			s (int): sparsity for weights Omega
 
 		"""
 		Omega_keep = [] 
@@ -106,7 +106,7 @@ class RFE():
 
 			Omega = np.random.uniform(low=-1,high=1,size=(1,k))
 
-			ind_zero = np.random.choice(k,k-q,replace=False)
+			ind_zero = np.random.choice(k,k-s,replace=False)
 			Omega[:,ind_zero] = 0.
 
 			bias = np.random.uniform(low=-1,high=1)
@@ -141,7 +141,7 @@ class RFE():
 
 	def phi(self,nodes):
 		"""
-		Activation function phi for RFE model.
+		Activation function phi for RF model.
 
 		Args:
 			nodes (ndarray): N length 1D numpy array containing nodal values
