@@ -30,19 +30,19 @@ Suppose you want to model a (high-dimensional) system :math:`f:\mathbb{R}^m\to\m
 
     f(x)\approx \tilde{f}(U^T x)
 
-where :math:`U\in\mathbb{R}^{m\times k}` is a linear dimension reduction step, and :math:`\tilde{f}:\mathbb{R}^k\to\mathbb{R}^n` is a nonlinear function which approximates :math:`f` on the reduced space defined by :math:`U`. For the ROMs developed in `Bollinger (2022) <???>`_(link will be available once published), :math:`U` and :math:`\tilde{f}` can be learned in the following ways (to be chosen by the user depending on the context of the problem):
+where :math:`U\in\mathbb{R}^{m\times k}` is a linear dimension reduction step, and :math:`\tilde{f}:\mathbb{R}^k\to\mathbb{R}^n` is a nonlinear function which approximates :math:`f` on the reduced space defined by :math:`U`. For the ROMs developed in `Bollinger (2022) <???>`_ (link will be available once published), :math:`U` and :math:`\tilde{f}` can be learned in the following ways (to be chosen by the user depending on the context of the problem):
 
 :math:`U`
 """""""""
 
 * :code:`rom.subspaces.AS` = learned via active subspaces (requires derivative information, or approximations thereof--can use :code:`rom.gradients.local_linear_gradients`)
-* :code:`rom.subspaces.POD` learned via proper orthogonal decomposition (used in certain applications, e.g. with time-series data)
+* :code:`rom.subspaces.POD` = learned via proper orthogonal decomposition (used in certain applications, e.g. with time-series data)
 
 :math:`\tilde{f}`
 """""""""""""""""
 
-* :code:`rom.surr_model.NN_alt` Shallow ReLU Network (uses alternating minimization scheme to update :math:`U`, which is first initialized by one of the above methods)
-* :code:`rom.surr_model.RF` Random Features (shallow network structure with first layer randomized and held fixed, only last layer is trained)
+* :code:`rom.surr_model.NN_alt` = Shallow ReLU Network (uses alternating minimization scheme to update :math:`U`, which is first initialized by one of the above methods)
+* :code:`rom.surr_model.RF` = Random Features (shallow network structure with first layer randomized and held fixed, only last layer is trained)
 
 Example:
 ^^^^^^^^
@@ -55,7 +55,7 @@ In this example, we walk through how to train ROM's RF model on fluid vorticity 
    import numpy as np
    import plotly.graph_objects as go
    
-The vorticity data can be found `here <https://github.com/kaylabollinger/ROM>`_.
+The vorticity data can be found `here <http://dmdbook.com/>`_.
 To load the data, just replace the :code:`data_dir` variable with the appropriate path to the dataset. Since the :code:`.npy` data file is too large to store in this repository, it is available at the provided link. To follow this example, the load the data as an :code:`ndarray` with snapshots stored in rows.
 
 .. code-block:: python
