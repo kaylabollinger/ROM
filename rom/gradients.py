@@ -33,8 +33,8 @@ def local_linear_gradients(X,Y,n=None):
 		dist = np.sum((X-x)**2,axis=1) # calculate distance from current point
 		ind = np.argsort(dist) # determine nearest neighbors
 		ind = ind[dist != 0] # ignore current point
-		A = np.concatenate([np.ones((p,1)),X[ind[:p],:]],axis=1) # ones for affine approximation
-		b = Y[ind[:p]]
+		A = np.concatenate([np.ones((n,1)),X[ind[:n],:]],axis=1) # ones for affine approximation
+		b = Y[ind[:n]]
 		sol = np.linalg.lstsq(A,b)[0]
 		DY.append(sol[1:])
 	DY = np.stack(DY,axis=0)
