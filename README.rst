@@ -27,7 +27,7 @@ To install the rom package, open the terminal/command line and clone the reposit
 
     git clone https://github.com/kaylabollinger/ROM.git  
 
-Navigate into the ``rom`` folder (where the setup.py file is located) and run the command
+Navigate into the ``ROM`` folder (where the setup.py file is located) and run the command
 
 .. code-block:: bash
 
