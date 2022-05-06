@@ -28,7 +28,7 @@ Navigate into the ``rom`` folder (where the setup.py file is located) and run th
 
     python setup.py install
   
-You should now be able to import the rom package in Python scripts with the command ``import active_subspaces``.
+You should now be able to import the rom package in Python scripts with the command ``import rom``.
 
 Documentation
 -------------
