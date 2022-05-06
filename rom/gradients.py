@@ -35,7 +35,7 @@ def local_linear_gradients(X,Y,n=None):
 		ind = ind[dist != 0] # ignore current point
 		A = np.concatenate([np.ones((n,1)),X[ind[:n],:]],axis=1) # ones for affine approximation
 		b = Y[ind[:n]]
-		sol = np.linalg.lstsq(A,b)[0]
+		sol = np.linalg.lstsq(A,b,rcond=None)[0]
 		DY.append(sol[1:])
 	DY = np.stack(DY,axis=0)
 
