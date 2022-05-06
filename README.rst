@@ -19,12 +19,14 @@ Installation
 To install the rom package, open the terminal/command line and clone the repository with the command
 
 .. code-block:: bash
-  git clone https://github.com/kaylabollinger/ROM.git  
+
+    git clone https://github.com/kaylabollinger/ROM.git  
 
 Navigate into the ``rom`` folder (where the setup.py file is located) and run the command
 
 .. code-block:: bash
-  python setup.py install
+
+    python setup.py install
   
 You should now be able to import the rom package in Python scripts with the command ``import active_subspaces``.
 
