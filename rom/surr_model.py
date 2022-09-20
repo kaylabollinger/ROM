@@ -7,7 +7,7 @@ import torch.nn as nn
 
 from pymanopt.manifolds import Grassmann
 from pymanopt import Problem
-from pymanopt.solvers import SteepestDescent
+from pymanopt.optimizers import SteepestDescent
 
 class RF():
 	"""Random Feature Expansion surrogate model.
