@@ -6,7 +6,7 @@
 Welcome to ROM's documentation!
 ===============================
 
-ROM is a reduced order model regression package with implementations of the ROMs introduced in `Bollinger (2022) <???>`_ (link will be available once published).
+ROM is a reduced order model regression package with implementations of the ROMs introduced in `Bollinger (2022) <https://kilthub.cmu.edu/articles/thesis/Reduced_Order_Models_and_Regression_for_Applications_to_Structural_Modeling/21111022>`_.
 
 
 .. toctree::
@@ -19,7 +19,7 @@ ROM is a reduced order model regression package with implementations of the ROMs
 Description
 -----------
 
-Reduced order models (ROMs) are used to approximate high-dimensional complex systems by simpler, often interpretable low-dimensional systems. This python package contains two ROMs developed in `Bollinger (2022) <???>`_ (link will be available once published). Examples (using Jupyter notebooks) of how to apply this code are found in the "examples" folder in this repository, and the datasets used in these examples (and in the work cited above) are found in the "data" folder.
+Reduced order models (ROMs) are used to approximate high-dimensional complex systems by simpler, often interpretable low-dimensional systems. This python package contains two ROMs developed in `Bollinger (2022) <https://kilthub.cmu.edu/articles/thesis/Reduced_Order_Models_and_Regression_for_Applications_to_Structural_Modeling/21111022>`_. Examples (using Jupyter notebooks) of how to apply this code are found in the "examples" folder in this repository, and the datasets used in these examples (and in the work cited above) are found in the "data" folder.
 
 How it works:
 ^^^^^^^^^^^^^
@@ -30,7 +30,7 @@ Suppose you want to model a (high-dimensional) system :math:`f:\mathbb{R}^m\to\m
 
     f(x)\approx \tilde{f}(U^T x)
 
-where :math:`U\in\mathbb{R}^{m\times k}` is a linear dimension reduction step, and :math:`\tilde{f}:\mathbb{R}^k\to\mathbb{R}^n` is a nonlinear function which approximates :math:`f` on the reduced space defined by :math:`U`. For the ROMs developed in `Bollinger (2022) <???>`_ (link will be available once published), :math:`U` and :math:`\tilde{f}` can be learned in the following ways (to be chosen by the user depending on the context of the problem):
+where :math:`U\in\mathbb{R}^{m\times k}` is a linear dimension reduction step, and :math:`\tilde{f}:\mathbb{R}^k\to\mathbb{R}^n` is a nonlinear function which approximates :math:`f` on the reduced space defined by :math:`U`. For the ROMs developed in `Bollinger (2022) <https://kilthub.cmu.edu/articles/thesis/Reduced_Order_Models_and_Regression_for_Applications_to_Structural_Modeling/21111022>`_, :math:`U` and :math:`\tilde{f}` can be learned in the following ways (to be chosen by the user depending on the context of the problem):
 
 :math:`U`
 """""""""
